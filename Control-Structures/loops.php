@@ -12,6 +12,7 @@
 		echo "<br />Count: {$count}";
 	?>
 	<br />
+    <br>
 	<?php
 		$count = 0;
 		while ($count <= 10) {
