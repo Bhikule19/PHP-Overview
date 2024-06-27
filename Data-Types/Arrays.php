@@ -4,6 +4,7 @@
 	</head>
 	<body>
 		<?php 
+        //Indexed Array 
         $array1 = array(4,8,15,25,45)
        ; ?>
         <?php echo $array1[0] ;?>
@@ -12,7 +13,10 @@
 		<?php $array2[3] = "cat"; ?>
         <?php echo $array2[3]; ?>
         <br/>
-        <?php $array3 = array("first_name"=> "Kevin", "last_name" => "Skogand") ?>
+        
+        <?php 
+        //Associative Array
+        $array3 = array("first_name"=> "Kevin", "last_name" => "Skogand") ?>
         <?php echo $array3["first_name"] . " " . $array3["last_name"] ; ?>
         <br/>
         <pre><?php print_r($array2) ?></pre>
@@ -34,9 +38,36 @@
         <br>
 
         How to write constants:
-        <?php define("MAX_WIDTH", 980);
+        <?php 
+        // Constants
+        define("MAX_WIDTH", 980);
         echo MAX_WIDTH ?> <br>
         <?php define("STRING", "This is the const string"); echo STRING ?>
+
+        Multi Dimentional Array
+
+        <?php 
+        // Multi dimentional array
+        $multiDim = array(
+            array(1,2,3,4),
+            array(7,8,9,10),
+            array(11,12,13,14),
+        );
+        ?>
+<prev>
+    <!-- <?php var_dump($multiDim); ?> -->
+</prev>
+<br>
+
+<?php 
+for ($i=0; $i < count($multiDim); $i++) { 
+    for ($j=0; $j < count($multiDim[$i]); $j++) { 
+        echo $multiDim[$i][$j]. " " ;
+    }
+    echo "<br/>";
+};
+?>
+
 
 
 
