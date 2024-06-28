@@ -156,4 +156,3 @@ MariaDB [widget_corp]> quit
 Bye
 
 abhis@TUFF c:\xampp
-#
