@@ -30,5 +30,34 @@
 		return $page_set;
 
 	}
+
+	function get_subjects_by_id($subject_id){
+		global $db;
+		$query = "SELECT * ";
+		$query .= "FROM subjects ";
+		$query .= "WHERE id=" . $subject_id . " ";
+		$query .= "LIMIT 1";
+		$result_set = mysqli_query($db, $query);
+		confirm_query($result_set, $db);
+		if($subject = mysqli_fetch_array($result_set)){
+			return $subject;
+		} else {
+			return NULL;
+		}
+	}
+	function get_pages_by_id($page_id){
+		global $db;
+		$query = "SELECT * ";
+		$query .= "FROM pages ";
+		$query .= "WHERE id=" . $page_id . " ";
+		$query .= "LIMIT 1";
+		$result_set = mysqli_query($db, $query);
+		confirm_query($result_set, $db);
+		if($subject = mysqli_fetch_array($result_set)){
+			return $subject;
+		} else {
+			return NULL;
+		}
+	}
 	
 ?>
