@@ -36,9 +36,9 @@
 ?>
 
 <?php 
-    $menu_name = $_POST['menu_name']; // Single Quote for strings are absolute in mysql
-    $position = $_POST['position'];
-    $visible = $_POST['visible'];
+    $menu_name = mysql_prep($_POST['menu_name']); // Single Quote for strings are absolute in mysql
+    $position = mysql_prep($_POST['position']);
+    $visible = mysql_prep($_POST['visible']);
 ?>
 
 <?php 
