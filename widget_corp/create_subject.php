@@ -22,14 +22,6 @@
     }
   
 
-    if(!isset($_POST['menu_name']) || empty($_POST['menu_name'])){
-        $errors[] = "Menu name cannot be blank.";
-    }
-    
-    if(!isset($_POST['position']) || empty($_POST['position'])){
-        $errors[] = "Position must be a positive integer.";
-    }
-
     if(!empty($errors)){
         redirect_to("new_subject.php");
     }

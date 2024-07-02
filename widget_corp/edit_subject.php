@@ -1,7 +1,7 @@
 <?php require_once("includes/connection.php"); ?>
 <?php require_once("includes/functions.php"); ?>
 <?php
-		if (intval($_GET['subj']) == 0) {
+		if (intval($_GET['subj']) == 0) { //To check we are getting the subject ID successfully
 			redirect_to("content.php");
 		}
 		if (isset($_POST['submit'])) {
@@ -108,6 +108,10 @@
 					?> /> Yes
 				</p>
 				<input type="submit" name="submit" value="Edit Subject" />
+                &nbsp;
+                &nbsp;
+                <a href="delete_subject.php?subj=<?php echo urlencode($sel_subject['id']); ?>" 
+                onclick="return confirm('Are you sure?');" >Delete Subject</a>
 			</form>
 			<br />
 			<a href="content.php">Cancel</a>
