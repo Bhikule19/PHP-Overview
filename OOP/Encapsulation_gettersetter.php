@@ -31,3 +31,5 @@ $abhishek->setAge(20);
 var_dump($abhishek);
 
 ?>
+
+<!-- Protected can be used within the class  of child and parent but bit private -->
