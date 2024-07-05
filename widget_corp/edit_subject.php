@@ -1,7 +1,11 @@
+<?php require_once("includes/session.php") ?>
+
 <?php require_once("includes/connection.php"); ?>
 <?php require_once("includes/functions.php"); ?>
+<?php confirmed_logged_in(); ?>
+
 <?php
-		if (intval($_GET['subj']) == 0) { //To check we are getting the subject ID successfully
+		if (intval($_GET['subj']) == 0) {
 			redirect_to("content.php");
 		}
 		if (isset($_POST['submit'])) {
@@ -15,9 +19,7 @@
 			}
 			$fields_with_lengths = array('menu_name' => 30);
 			foreach($fields_with_lengths as $fieldname => $maxlength ) {
-				if (strlen(trim(mysql_prep($_POST[$fieldname]))) > $maxlength) { 
-                    $errors[] = $fieldname; 
-                }
+				if (strlen(trim(mysql_prep($_POST[$fieldname]))) > $maxlength) { $errors[] = $fieldname; }
 			}
 			
 			if (empty($errors)) {
@@ -35,19 +37,17 @@
 				$result = mysqli_query($db, $query);
 				if (mysqli_affected_rows($db) == 1) {
 					// Success
-                    $message = "The subject was sucessfully updated.";
+					$message = "The subject was successfully updated.";
 				} else {
 					// Failed
-
-                    $message = "The subject update failed.";
-                    $message .= "<br/>" . mysqli_error($db);
+					$message = "The subject update failed.";
+					$message .= "<br />". mysqli_error($db);
 				}
 				
 			} else {
 				// Errors occurred
-                $message = "There were " . count($errors) . " errors in the form";
+				$message = "There were " . count($errors) . " errors in the form.";
 			}
-
 			
 			
 			
@@ -63,21 +63,20 @@
 		</td>
 		<td id="page">
 			<h2>Edit Subject: <?php echo $sel_subject['menu_name']; ?></h2>
-            <?php 
-            if(!empty($message)){
-                echo "<p class=\"message\">" . $message . "</p>";
-            }
-            ?>
-            <?php 
-            if(!empty($message)){
-                echo "<p class=\"error\">";
-                echo  "Please review the following feilds:<br/>";
-                foreach($errors as $error){
-                    echo " - " . $error . "<br/>";
-                }
-                echo "</p>";
-            }
-            ?>
+			<?php if (!empty($message)) {
+				echo "<p class=\"message\">" . $message . "</p>";
+			} ?>
+			<?php
+			// output a list of the fields that had errors
+			if (!empty($errors)) {
+				echo "<p class=\"errors\">";
+				echo "Please review the following fields:<br />";
+				foreach($errors as $error) {
+					echo " - " . $error . "<br />";
+				}
+				echo "</p>";
+			}
+			?>
 			<form action="edit_subject.php?subj=<?php echo urlencode($sel_subject['id']); ?>" method="post">
 				<p>Subject name: 
 					<input type="text" name="menu_name" value="<?php echo $sel_subject['menu_name']; ?>" id="menu_name" />
@@ -108,13 +107,25 @@
 					?> /> Yes
 				</p>
 				<input type="submit" name="submit" value="Edit Subject" />
-                &nbsp;
-                &nbsp;
-                <a href="delete_subject.php?subj=<?php echo urlencode($sel_subject['id']); ?>" 
-                onclick="return confirm('Are you sure?');" >Delete Subject</a>
+				&nbsp;&nbsp;
+				<a href="delete_subject.php?subj=<?php echo urlencode($sel_subject['id']); ?>" onclick="return confirm('Are you sure?');">Delete Subject</a>
 			</form>
 			<br />
 			<a href="content.php">Cancel</a>
+			<div style="margin-top: 2em; border-top: 1px solid #000000;">
+				<h3>Pages in this subject:</h3>
+				<ul>
+<?php 
+	$subject_pages = get_pages_for_subject($sel_subject['id']);
+	while($page = mysqli_fetch_array($subject_pages)) {
+		echo "<li><a href=\"content.php?page={$page['id']}\">
+		{$page['menu_name']}</a></li>";
+	}
+?>
+				</ul>
+				<br />
+				+ <a href="new_page.php?subj=<?php echo $sel_subject['id']; ?>">Add a new page to this subject</a>
+			</div>
 		</td>
 	</tr>
 </table>
